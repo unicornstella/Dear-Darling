@@ -248,8 +248,8 @@
     <p id="modal-date"></p>
     <h3>My Review ♡</h3>
     <div id="modal-review" class="modal-review"></div>
-    <button id="delete-book" class="delete-button">Remove book</button>
-  </div>
+<button id="edit-book" class="library-button">Edit Book ♡</button>
+<button id="delete-book" class="delete-button">Remove book</button>  </div>
 </div>
 
 <script>
@@ -339,7 +339,43 @@
   function closeBook() {
     document.getElementById("book-modal").style.display = "none";
   }
+document.getElementById("edit-book").addEventListener("click", function() {
+  if (selectedBook === null) return;
 
+  const book = books[selectedBook];
+
+  const title = prompt("Edit book title:", book.title);
+  if (title === null) return;
+
+  const author = prompt("Edit author:", book.author);
+  if (author === null) return;
+
+  const cover = prompt("Edit cover image URL:", book.cover);
+  if (cover === null) return;
+
+  const rating = prompt(
+    "Choose rating: ★★★★★, ★★★★☆, ★★★☆☆, ★★☆☆☆, or ★☆☆☆☆",
+    book.rating
+  );
+  if (rating === null) return;
+
+  const date = prompt("Edit date finished (YYYY-MM-DD):", book.date);
+  if (date === null) return;
+
+  const review = prompt("Edit your review:", book.review);
+  if (review === null) return;
+
+  book.title = title.trim() || book.title;
+  book.author = author.trim() || book.author;
+  book.cover = cover.trim();
+  book.rating = rating;
+  book.date = date;
+  book.review = review;
+
+  saveBooks();
+  renderBooks();
+  openBook(selectedBook);
+});
   document.getElementById("delete-book").addEventListener("click", function() {
     if (selectedBook === null) return;
 

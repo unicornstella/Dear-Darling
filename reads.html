@@ -27,6 +27,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow-wrap: anywhere;
         }
 
         .book-cover h3 {
@@ -59,17 +60,24 @@
             color: #b18a42;
         }
 
-        .review-box {
+        .review-box, .detail-input {
             width: 100%;
-            min-height: 150px;
-            padding: 15px;
+            padding: 13px;
             font-family: Georgia, serif;
             font-size: 15px;
-            line-height: 1.7;
             background: #fffaf0;
             border: 1px solid #c5b18e;
             color: #394333;
+        }
+
+        .review-box {
+            min-height: 150px;
+            line-height: 1.7;
             resize: vertical;
+        }
+
+        .detail-input {
+            margin-bottom: 12px;
         }
 
         .save-button {
@@ -133,16 +141,40 @@
 
                 <div class="book-cover">
                     <span style="font-size:30px;">♡</span>
-                    <h3>Book Title</h3>
-                    <p>Author Name</p>
+                    <h3 id="cover-title">Book Title</h3>
+                    <p id="cover-author">Author Name</p>
                 </div>
 
                 <div class="book-review">
-                    <h3>My Thoughts</h3>
 
+                    <h3>Book Details</h3>
+
+                    <p class="eyebrow">book title</p>
+                    <input
+                        class="detail-input"
+                        id="book-title"
+                        placeholder="Enter book title..."
+                    >
+
+                    <p class="eyebrow">author</p>
+                    <input
+                        class="detail-input"
+                        id="book-author"
+                        placeholder="Enter author's name..."
+                    >
+
+                    <button class="save-button" id="save-details">
+                        Save book details ♡
+                    </button>
+
+                    <p class="save-message" id="details-message"></p>
+
+                    <div class="forest-divider">❧ ❦ ❧</div>
+
+                    <h3>My Rating</h3>
                     <p class="eyebrow">choose your rating</p>
 
-                    <div class="stars" id="stars">
+                    <div class="stars">
                         <button class="star" data-rating="1" aria-label="1 star">★</button>
                         <button class="star" data-rating="2" aria-label="2 stars">★</button>
                         <button class="star" data-rating="3" aria-label="3 stars">★</button>
@@ -165,8 +197,8 @@
                     </button>
 
                     <p class="save-message" id="save-message"></p>
-                </div>
 
+                </div>
             </div>
         </section>
 
@@ -186,12 +218,24 @@
     </footer>
 
     <script>
-        let rating = Number(localStorage.getItem("reads-rating")) || 0;
-
+        const titleInput = document.getElementById("book-title");
+        const authorInput = document.getElementById("book-author");
+        const coverTitle = document.getElementById("cover-title");
+        const coverAuthor = document.getElementById("cover-author");
+        const review = document.getElementById("review");
         const stars = document.querySelectorAll(".star");
         const ratingLabel = document.getElementById("rating-label");
-        const review = document.getElementById("review");
-        const saveMessage = document.getElementById("save-message");
+
+        let rating = Number(localStorage.getItem("reads-rating")) || 0;
+
+        titleInput.value = localStorage.getItem("reads-title") || "";
+        authorInput.value = localStorage.getItem("reads-author") || "";
+        review.value = localStorage.getItem("reads-review") || "";
+
+        function updateCover() {
+            coverTitle.textContent = titleInput.value.trim() || "Book Title";
+            coverAuthor.textContent = authorInput.value.trim() || "Author Name";
+        }
 
         function showRating() {
             stars.forEach(star => {
@@ -204,6 +248,19 @@
                 : "No rating selected yet ♡";
         }
 
+        titleInput.addEventListener("input", updateCover);
+        authorInput.addEventListener("input", updateCover);
+
+        document.getElementById("save-details").addEventListener("click", () => {
+            localStorage.setItem("reads-title", titleInput.value);
+            localStorage.setItem("reads-author", authorInput.value);
+
+            updateCover();
+
+            document.getElementById("details-message").textContent =
+                "Your book details have been saved! ♡";
+        });
+
         stars.forEach(star => {
             star.addEventListener("click", () => {
                 rating = Number(star.dataset.rating);
@@ -212,13 +269,14 @@
             });
         });
 
-        review.value = localStorage.getItem("reads-review") || "";
-
         document.getElementById("save-review").addEventListener("click", () => {
             localStorage.setItem("reads-review", review.value);
-            saveMessage.textContent = "Your review has been saved! ♡";
+
+            document.getElementById("save-message").textContent =
+                "Your review has been saved! ♡";
         });
 
+        updateCover();
         showRating();
     </script>
 

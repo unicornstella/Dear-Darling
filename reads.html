@@ -5,6 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reads | Dear, Darling</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .book-entry {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            text-align: left;
+        }
+
+        .book-cover {
+            width: 170px;
+            min-height: 240px;
+            padding: 25px 15px;
+            background: linear-gradient(145deg,#53664c,#263c2c);
+            border: 6px double #c5b18e;
+            color: #f7f0e2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .book-cover h3 {
+            font-size: 23px;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .book-review {
+            flex: 1;
+            min-width: 230px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 7px;
+            margin: 12px 0;
+        }
+
+        .star {
+            border: none;
+            background: none;
+            color: #b8aa91;
+            font-size: 35px;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .star.selected {
+            color: #b18a42;
+        }
+
+        .review-box {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            font-family: Georgia, serif;
+            font-size: 15px;
+            line-height: 1.7;
+            background: #fffaf0;
+            border: 1px solid #c5b18e;
+            color: #394333;
+            resize: vertical;
+        }
+
+        .save-button {
+            margin-top: 12px;
+            padding: 11px 20px;
+            background: #263c2c;
+            color: #f7f0e2;
+            border: 1px solid #b69a68;
+            font-family: Georgia, serif;
+            cursor: pointer;
+        }
+
+        .save-message {
+            font-style: italic;
+            font-size: 13px;
+        }
+    </style>
 </head>
 
 <body>
@@ -48,8 +130,9 @@
             <h2>Book Reviews</h2>
 
             <div class="book-entry">
+
                 <div class="book-cover">
-                    <span>♡</span>
+                    <span style="font-size:30px;">♡</span>
                     <h3>Book Title</h3>
                     <p>Author Name</p>
                 </div>
@@ -57,23 +140,37 @@
                 <div class="book-review">
                     <h3>My Thoughts</h3>
 
-                    <p class="eyebrow">my rating</p>
-                    <p class="book-stars">☆☆☆☆☆</p>
+                    <p class="eyebrow">choose your rating</p>
 
-                    <p>
-                        Write your review here. What did you love?
-                        Which characters stayed with you?
-                        Would you recommend it?
-                    </p>
+                    <div class="stars" id="stars">
+                        <button class="star" data-rating="1" aria-label="1 star">★</button>
+                        <button class="star" data-rating="2" aria-label="2 stars">★</button>
+                        <button class="star" data-rating="3" aria-label="3 stars">★</button>
+                        <button class="star" data-rating="4" aria-label="4 stars">★</button>
+                        <button class="star" data-rating="5" aria-label="5 stars">★</button>
+                    </div>
+
+                    <p id="rating-label">No rating selected yet ♡</p>
+
+                    <p class="eyebrow">your review</p>
+
+                    <textarea
+                        class="review-box"
+                        id="review"
+                        placeholder="Write your thoughts about this book..."
+                    ></textarea>
+
+                    <button class="save-button" id="save-review">
+                        Save my review ♡
+                    </button>
+
+                    <p class="save-message" id="save-message"></p>
                 </div>
+
             </div>
-
-            <div class="forest-divider">❧ ❦ ❧</div>
-
-            <p class="quote-credit">
-                More stories and reviews will find their home here. ♡
-            </p>
         </section>
+
+        <div class="forest-divider">❧ ❦ ❧</div>
 
         <p style="text-align:center;">
             <a href="index.html" style="color:#f7f0e2;">
@@ -87,6 +184,43 @@
         <p>made with love, among the trees ♡</p>
         <p>dear, darling · est. 2026</p>
     </footer>
+
+    <script>
+        let rating = Number(localStorage.getItem("reads-rating")) || 0;
+
+        const stars = document.querySelectorAll(".star");
+        const ratingLabel = document.getElementById("rating-label");
+        const review = document.getElementById("review");
+        const saveMessage = document.getElementById("save-message");
+
+        function showRating() {
+            stars.forEach(star => {
+                const value = Number(star.dataset.rating);
+                star.classList.toggle("selected", value <= rating);
+            });
+
+            ratingLabel.textContent = rating
+                ? rating + " out of 5 stars ♡"
+                : "No rating selected yet ♡";
+        }
+
+        stars.forEach(star => {
+            star.addEventListener("click", () => {
+                rating = Number(star.dataset.rating);
+                localStorage.setItem("reads-rating", rating);
+                showRating();
+            });
+        });
+
+        review.value = localStorage.getItem("reads-review") || "";
+
+        document.getElementById("save-review").addEventListener("click", () => {
+            localStorage.setItem("reads-review", review.value);
+            saveMessage.textContent = "Your review has been saved! ♡";
+        });
+
+        showRating();
+    </script>
 
 </body>
 </html>

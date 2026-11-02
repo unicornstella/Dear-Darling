@@ -1,0 +1,176 @@
+/* =================================
+   DEAR, DARLING ♡
+   Woodland vintage theme
+================================= */
+
+:root {
+    --forest: #263d2e;
+    --deep-forest: #192c20;
+    --sage: #89977b;
+    --cream: #f5efdf;
+    --paper: #eee5d2;
+    --wood: #76543a;
+    --gold: #b69b69;
+    --ink: #394333;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    background-color: var(--deep-forest);
+    background-image:
+        linear-gradient(
+            rgba(22, 39, 27, 0.65),
+            rgba(22, 39, 27, 0.65)
+        );
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+/* WOODLAND HEADER */
+
+header {
+    position: relative;
+    margin: 35px auto 0;
+    width: min(90%, 950px);
+    padding: 38px 20px;
+    text-align: center;
+    color: var(--cream);
+
+    background:
+        linear-gradient(
+            rgba(61, 43, 28, 0.12),
+            rgba(35, 25, 17, 0.3)
+        ),
+        #76543a;
+
+    border: 8px ridge #a17a50;
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+header h1 {
+    font-size: clamp(38px, 7vw, 65px);
+    font-weight: normal;
+    font-style: italic;
+    margin: 0;
+    letter-spacing: 2px;
+    text-shadow: 2px 3px 5px #20170f;
+}
+
+header p {
+    letter-spacing: 3px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+/* NAVIGATION */
+
+nav {
+    width: min(95%, 1000px);
+    margin: 22px auto;
+    padding: 17px 12px;
+    text-align: center;
+
+    background: var(--cream);
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+}
+
+nav a {
+    display: inline-block;
+    color: var(--forest);
+    text-decoration: none;
+    margin: 7px 12px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #a47c4f;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+/* MAIN CONTENT */
+
+main {
+    width: min(90%, 850px);
+    margin: 45px auto;
+    padding: 0;
+}
+
+.welcome {
+    position: relative;
+    padding: 45px 35px;
+    text-align: center;
+    line-height: 1.9;
+
+    background: var(--paper);
+    border: 8px double #c5b697;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.3);
+}
+
+.welcome h2 {
+    color: var(--forest);
+    font-size: 30px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.welcome p {
+    font-size: 16px;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 30px;
+    color: var(--cream);
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+/* LINKS */
+
+a {
+    cursor: pointer;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    header {
+        margin-top: 18px;
+        padding: 28px 12px;
+    }
+
+    nav a {
+        margin: 8px;
+        font-size: 12px;
+    }
+
+    .welcome {
+        padding: 28px 18px;
+    }
+}

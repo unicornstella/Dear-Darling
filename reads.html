@@ -1,284 +1,365 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reads | Dear, Darling</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reads | Dear, Darling</title>
+  <link rel="stylesheet" href="style.css">
 
-    <style>
-        .book-entry {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            text-align: left;
-        }
+  <style>
+    .reading-library {
+      max-width: 1000px;
+      margin: 35px auto;
+      padding: 25px;
+      color: #40533b;
+    }
 
-        .book-cover {
-            width: 170px;
-            min-height: 240px;
-            padding: 25px 15px;
-            background: linear-gradient(145deg,#53664c,#263c2c);
-            border: 6px double #c5b18e;
-            color: #f7f0e2;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow-wrap: anywhere;
-        }
+    .library-heading {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-        .book-cover h3 {
-            font-size: 23px;
-            font-weight: normal;
-            font-style: italic;
-        }
+    .library-heading h1 {
+      font-family: Georgia, serif;
+      font-size: 38px;
+    }
 
-        .book-review {
-            flex: 1;
-            min-width: 230px;
-        }
+    .book-form {
+      background: #f3edde;
+      border: 1px solid #d8cbb5;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 35px;
+    }
 
-        .stars {
-            display: flex;
-            gap: 7px;
-            margin: 12px 0;
-        }
+    .book-form input,
+    .book-form textarea,
+    .book-form select {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px;
+      margin: 9px 0 16px;
+      border: 1px solid #c9b99e;
+      border-radius: 7px;
+      background: #fffdf7;
+      color: #40533b;
+      font: inherit;
+    }
 
-        .star {
-            border: none;
-            background: none;
-            color: #b8aa91;
-            font-size: 35px;
-            padding: 0;
-            cursor: pointer;
-        }
+    .book-form label {
+      font-weight: bold;
+      font-size: 14px;
+    }
 
-        .star.selected {
-            color: #b18a42;
-        }
+    .library-button {
+      background: #526747;
+      color: white;
+      border: none;
+      padding: 12px 19px;
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+    }
 
-        .review-box, .detail-input {
-            width: 100%;
-            padding: 13px;
-            font-family: Georgia, serif;
-            font-size: 15px;
-            background: #fffaf0;
-            border: 1px solid #c5b18e;
-            color: #394333;
-        }
+    .library-button:hover {
+      background: #394d32;
+    }
 
-        .review-box {
-            min-height: 150px;
-            line-height: 1.7;
-            resize: vertical;
-        }
+    .bookshelf {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 25px;
+    }
 
-        .detail-input {
-            margin-bottom: 12px;
-        }
+    .book-card {
+      cursor: pointer;
+      text-align: center;
+      padding: 12px;
+      background: #eee4d3;
+      border-radius: 10px;
+      border: 1px solid #d8cbb5;
+      transition: transform 0.2s;
+    }
 
-        .save-button {
-            margin-top: 12px;
-            padding: 11px 20px;
-            background: #263c2c;
-            color: #f7f0e2;
-            border: 1px solid #b69a68;
-            font-family: Georgia, serif;
-            cursor: pointer;
-        }
+    .book-card:hover {
+      transform: translateY(-5px);
+    }
 
-        .save-message {
-            font-style: italic;
-            font-size: 13px;
-        }
-    </style>
+    .book-card img {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 3px 4px 8px #0002;
+    }
+
+    .book-card h3 {
+      font-family: Georgia, serif;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .book-card p {
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .empty-library {
+      text-align: center;
+      padding: 35px;
+      color: #786d5b;
+      font-family: Georgia, serif;
+    }
+
+    .book-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: #172016cc;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      background: #f6f0e4;
+      color: #40533b;
+      max-width: 550px;
+      margin: 45px auto;
+      padding: 25px;
+      border-radius: 14px;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-content img {
+      width: 170px;
+      max-width: 100%;
+      border-radius: 6px;
+      box-shadow: 3px 5px 10px #0002;
+    }
+
+    .modal-content h2 {
+      font-family: Georgia, serif;
+    }
+
+    .modal-review {
+      text-align: left;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      background: #fffdf7;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      border: none;
+      background: none;
+      color: #40533b;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .delete-button {
+      background: #8b5148;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 7px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+  </style>
 </head>
 
 <body>
 
-    <header class="woodland-header">
-        <div class="sign-decoration">❦</div>
-        <h1>dear, darling ♡</h1>
-        <p>a little corner of the internet</p>
-        <div class="sign-decoration">❦</div>
-    </header>
+<header>
+  <h1>dear, darling ♡</h1>
+</header>
 
-    <nav class="main-navigation">
-        <a href="index.html">Home</a>
-        <a href="gossip.html">Gossip</a>
-        <a href="reads.html">Reads</a>
-        <a href="marvel.html">Marvel</a>
-        <a href="music.html">Music</a>
-        <a href="youtube.html">YouTube</a>
-    </nav>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="gossip.html">Gossip</a>
+  <a href="reads.html">Reads</a>
+  <a href="marvel.html">Marvel</a>
+  <a href="music.html">Music</a>
+  <a href="youtube.html">YouTube</a>
+</nav>
 
-    <main>
+<main class="reading-library">
 
-        <section class="welcome">
-            <p class="eyebrow">✧ stories worth getting lost in ✧</p>
-            <h2>The Little Library</h2>
-            <p>
-                A collection of stories, favorite characters,
-                beautiful writing, and books that stay with us.
-            </p>
-            <p class="welcome-ending">One more chapter, darling. ♡</p>
-        </section>
+  <section class="library-heading">
+    <h1>୨ৎ My Reading Library ୨ৎ</h1>
+    <p>A little home for all the stories I've read.</p>
+  </section>
 
-        <section class="content-panel">
-            <p class="eyebrow">between the pages</p>
-            <h2>My Reading Journal</h2>
-            <p>Books I've read, loved, and want to remember.</p>
-        </section>
+  <section class="book-form">
+    <h2>Add a new book ♡</h2>
 
-        <section class="content-panel">
-            <p class="eyebrow">a story to remember</p>
-            <h2>Book Reviews</h2>
+    <form id="book-form">
+      <label for="title">Book title</label>
+      <input id="title" type="text" placeholder="Enter the book title" required>
 
-            <div class="book-entry">
+      <label for="author">Author</label>
+      <input id="author" type="text" placeholder="Enter the author's name" required>
 
-                <div class="book-cover">
-                    <span style="font-size:30px;">♡</span>
-                    <h3 id="cover-title">Book Title</h3>
-                    <p id="cover-author">Author Name</p>
-                </div>
+      <label for="cover">Book cover image URL (optional)</label>
+      <input id="cover" type="url" placeholder="Paste an image link">
 
-                <div class="book-review">
+      <label for="rating">Your rating</label>
+      <select id="rating">
+        <option value="★★★★★">★★★★★</option>
+        <option value="★★★★☆">★★★★☆</option>
+        <option value="★★★☆☆">★★★☆☆</option>
+        <option value="★★☆☆☆">★★☆☆☆</option>
+        <option value="★☆☆☆☆">★☆☆☆☆</option>
+      </select>
 
-                    <h3>Book Details</h3>
+      <label for="date">Date finished</label>
+      <input id="date" type="date">
 
-                    <p class="eyebrow">book title</p>
-                    <input
-                        class="detail-input"
-                        id="book-title"
-                        placeholder="Enter book title..."
-                    >
+      <label for="review">Your review</label>
+      <textarea id="review" rows="5" placeholder="Write your thoughts about this book..."></textarea>
 
-                    <p class="eyebrow">author</p>
-                    <input
-                        class="detail-input"
-                        id="book-author"
-                        placeholder="Enter author's name..."
-                    >
+      <button class="library-button" type="submit">Add to my bookshelf ♡</button>
+    </form>
+  </section>
 
-                    <button class="save-button" id="save-details">
-                        Save book details ♡
-                    </button>
+  <section>
+    <h2>My Bookshelf</h2>
+    <div id="bookshelf" class="bookshelf"></div>
+  </section>
 
-                    <p class="save-message" id="details-message"></p>
+</main>
 
-                    <div class="forest-divider">❧ ❦ ❧</div>
+<div id="book-modal" class="book-modal">
+  <div class="modal-content">
+    <button class="close-modal" onclick="closeBook()">×</button>
+    <img id="modal-cover" src="" alt="Book cover">
+    <h2 id="modal-title"></h2>
+    <p id="modal-author"></p>
+    <p id="modal-rating"></p>
+    <p id="modal-date"></p>
+    <h3>My Review ♡</h3>
+    <div id="modal-review" class="modal-review"></div>
+    <button id="delete-book" class="delete-button">Remove book</button>
+  </div>
+</div>
 
-                    <h3>My Rating</h3>
-                    <p class="eyebrow">choose your rating</p>
+<script>
+  const form = document.getElementById("book-form");
+  const bookshelf = document.getElementById("bookshelf");
 
-                    <div class="stars">
-                        <button class="star" data-rating="1" aria-label="1 star">★</button>
-                        <button class="star" data-rating="2" aria-label="2 stars">★</button>
-                        <button class="star" data-rating="3" aria-label="3 stars">★</button>
-                        <button class="star" data-rating="4" aria-label="4 stars">★</button>
-                        <button class="star" data-rating="5" aria-label="5 stars">★</button>
-                    </div>
+  let books = JSON.parse(localStorage.getItem("dear-darling-books") || "[]");
+  let selectedBook = null;
 
-                    <p id="rating-label">No rating selected yet ♡</p>
+  function saveBooks() {
+    localStorage.setItem("dear-darling-books", JSON.stringify(books));
+  }
 
-                    <p class="eyebrow">your review</p>
+  function renderBooks() {
+    bookshelf.innerHTML = "";
 
-                    <textarea
-                        class="review-box"
-                        id="review"
-                        placeholder="Write your thoughts about this book..."
-                    ></textarea>
+    if (books.length === 0) {
+      bookshelf.innerHTML = `
+        <div class="empty-library">
+          <h3>Your bookshelf is waiting ♡</h3>
+          <p>Add your first book to begin your collection!</p>
+        </div>`;
+      return;
+    }
 
-                    <button class="save-button" id="save-review">
-                        Save my review ♡
-                    </button>
+    books.forEach((book, index) => {
+      const card = document.createElement("div");
+      card.className = "book-card";
 
-                    <p class="save-message" id="save-message"></p>
+      const image = document.createElement("img");
+      image.src = book.cover || "https://placehold.co/300x450/E5D8C5/40533B?text=Book+Cover";
+      image.alt = "Cover of " + book.title;
+      image.onerror = () => {
+        image.src = "https://placehold.co/300x450/E5D8C5/40533B?text=Book+Cover";
+      };
 
-                </div>
-            </div>
-        </section>
+      const title = document.createElement("h3");
+      title.textContent = book.title;
 
-        <div class="forest-divider">❧ ❦ ❧</div>
+      const author = document.createElement("p");
+      author.textContent = book.author;
 
-        <p style="text-align:center;">
-            <a href="index.html" style="color:#f7f0e2;">
-                ♡ Return home
-            </a>
-        </p>
+      const rating = document.createElement("p");
+      rating.textContent = book.rating;
 
-    </main>
+      card.append(image, title, author, rating);
+      card.addEventListener("click", () => openBook(index));
+      bookshelf.appendChild(card);
+    });
+  }
 
-    <footer>
-        <p>made with love, among the trees ♡</p>
-        <p>dear, darling · est. 2026</p>
-    </footer>
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
 
-    <script>
-        const titleInput = document.getElementById("book-title");
-        const authorInput = document.getElementById("book-author");
-        const coverTitle = document.getElementById("cover-title");
-        const coverAuthor = document.getElementById("cover-author");
-        const review = document.getElementById("review");
-        const stars = document.querySelectorAll(".star");
-        const ratingLabel = document.getElementById("rating-label");
+    const book = {
+      title: document.getElementById("title").value.trim(),
+      author: document.getElementById("author").value.trim(),
+      cover: document.getElementById("cover").value.trim(),
+      rating: document.getElementById("rating").value,
+      date: document.getElementById("date").value,
+      review: document.getElementById("review").value.trim()
+    };
 
-        let rating = Number(localStorage.getItem("reads-rating")) || 0;
+    books.unshift(book);
+    saveBooks();
+    renderBooks();
+    form.reset();
+  });
 
-        titleInput.value = localStorage.getItem("reads-title") || "";
-        authorInput.value = localStorage.getItem("reads-author") || "";
-        review.value = localStorage.getItem("reads-review") || "";
+  function openBook(index) {
+    selectedBook = index;
+    const book = books[index];
 
-        function updateCover() {
-            coverTitle.textContent = titleInput.value.trim() || "Book Title";
-            coverAuthor.textContent = authorInput.value.trim() || "Author Name";
-        }
+    document.getElementById("modal-cover").src =
+      book.cover || "https://placehold.co/300x450/E5D8C5/40533B?text=Book+Cover";
+    document.getElementById("modal-title").textContent = book.title;
+    document.getElementById("modal-author").textContent = "By " + book.author;
+    document.getElementById("modal-rating").textContent = book.rating;
+    document.getElementById("modal-date").textContent =
+      book.date ? "Finished: " + book.date : "";
+    document.getElementById("modal-review").textContent =
+      book.review || "No review written yet ♡";
 
-        function showRating() {
-            stars.forEach(star => {
-                const value = Number(star.dataset.rating);
-                star.classList.toggle("selected", value <= rating);
-            });
+    document.getElementById("book-modal").style.display = "block";
+  }
 
-            ratingLabel.textContent = rating
-                ? rating + " out of 5 stars ♡"
-                : "No rating selected yet ♡";
-        }
+  function closeBook() {
+    document.getElementById("book-modal").style.display = "none";
+  }
 
-        titleInput.addEventListener("input", updateCover);
-        authorInput.addEventListener("input", updateCover);
+  document.getElementById("delete-book").addEventListener("click", function() {
+    if (selectedBook === null) return;
 
-        document.getElementById("save-details").addEventListener("click", () => {
-            localStorage.setItem("reads-title", titleInput.value);
-            localStorage.setItem("reads-author", authorInput.value);
+    if (confirm("Remove this book from your bookshelf?")) {
+      books.splice(selectedBook, 1);
+      saveBooks();
+      renderBooks();
+      closeBook();
+      selectedBook = null;
+    }
+  });
 
-            updateCover();
+  window.addEventListener("click", function(event) {
+    if (event.target === document.getElementById("book-modal")) {
+      closeBook();
+    }
+  });
 
-            document.getElementById("details-message").textContent =
-                "Your book details have been saved! ♡";
-        });
-
-        stars.forEach(star => {
-            star.addEventListener("click", () => {
-                rating = Number(star.dataset.rating);
-                localStorage.setItem("reads-rating", rating);
-                showRating();
-            });
-        });
-
-        document.getElementById("save-review").addEventListener("click", () => {
-            localStorage.setItem("reads-review", review.value);
-
-            document.getElementById("save-message").textContent =
-                "Your review has been saved! ♡";
-        });
-
-        updateCover();
-        showRating();
-    </script>
+  renderBooks();
+</script>
 
 </body>
 </html>

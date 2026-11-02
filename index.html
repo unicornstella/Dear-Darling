@@ -3,65 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Dear, Darling ♡</title>
 
-    <style>
-        body {
-            background-color: #e9e5d8;
-            color: #344735;
-            font-family: Georgia, serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #344735;
-            color: #f8f1e4;
-            padding: 35px 20px;
-        }
-
-        h1 {
-            font-size: 48px;
-            font-weight: normal;
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-
-        nav {
-            background-color: #f8f1e4;
-            padding: 18px 10px;
-            border-bottom: 2px solid #c7bba4;
-        }
-
-        nav a {
-            color: #344735;
-            text-decoration: none;
-            margin: 10px;
-            font-size: 15px;
-        }
-
-        main {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 25px;
-        }
-
-        .welcome {
-            background-color: #f8f1e4;
-            border: 1px solid #c7bba4;
-            padding: 35px 25px;
-            line-height: 1.8;
-        }
-
-        footer {
-            padding: 25px;
-            font-size: 13px;
-        }
-    </style>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>
-        <h1>dear, darling ♡</h1
+
+    <!-- WOODLAND SIGN HEADER -->
+    <header class="woodland-header">
+        <div class="sign-decoration">❦</div>
+        <h1>dear, darling ♡</h1>
+        <p>a little corner of the internet</p>
+        <div class="sign-decoration">❦</div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="main-navigation">
+        <a href="index.html">Home</a>
+        <a href="gossip.html">Gossip</a>
+        <a href="reads.html">Reads</a>
+        <a href="marvel.html">Marvel</a>
+        <a href="music.html">Music</a>
+        <a href="youtube.html">YouTube</a>
+    </nav>
+
+    <!-- MAIN WEBSITE -->
+    <main>
+
+        <!-- WELCOME -->
+        <section class="welcome">
+            <p class="eyebrow">✧ welcome to my little world ✧</p>
+
+            <h2>Come in, darling.</h2>
+
+            <p>
+                A little place tucked away between the trees,
+                filled with stories, music, favorite characters,
+                lovely things, and thoughts worth keeping.
+            </p>
+
+            <p class="welcome-ending">
+                Stay awhile. You're always welcome here. ♡
+            </p>
+        </section>
+
+        <!-- DECORATIVE DIVIDER -->
+        <div class="forest-divider">❧ ❦ ❧</div>
+
+        <!-- QUOTE OF THE DAY -->
+        <section class="content-panel">
+            <p class="eyebrow">a little something to remember</p>
+            <h2>Quote of the Day</h2>
+
+            <blockquote id="daily-quote">
+                "There is a little bit of magic in everything."
+            </blockquote>
+
+            <p class="quote-credit">— a thought for today ♡</p>
+        </section>
+
+        <!-- CURRENTLY LISTENING -->
+        <section class="content-panel music-panel">
+            <p class="eyebrow">now playing in my little world</p>
+            <h2>Currently Listening</h2>
+
+            <div class="music-placeholder">
+                <div class="music-art">♫</div>
+
+                <div>
+                    <h3>Song Title</h3>
+                    <p>Artist Name</p>
+                    <a href="music.html">Visit the music room ♡</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- LATEST UPDATES -->
+        <section class="content-panel">
+            <p class="eyebrow">from the little journal</p>
+            <h2>Latest Updates</h2>
+
+            <p>
+                Little updates, new discoveries, and things
+                worth sharing will find their home here.
+            </p>
+        </section>
+
+        <!-- EXPLORE -->
+        <section class="explore-section">
+            <h2>Explore the little rooms</h2>
+
+            <div class="room-grid">
+
+                <a class="room-card" href="gossip.html">
+                    <span>✉</span>
+                    <h3>Gossip</h3>
+                    <p>Thoughts from the journal</p>
+                </a>
+
+                <a class="room-card" href="reads.html">
+                    <span>❀</span>
+                    <h3>Reads</h3>
+                    <p>Books and little reviews</p>
+                </a>
+
+                <a class="room-card" href="marvel.html">
+                    <span>⍟</span>
+                    <h3>Marvel</h3>
+                    <p>A universe worth exploring</p>
+                </a>
+
+                <a class="room-card" href="music.html">
+                    <span>♫</span>
+                    <h3>Music</h3>
+                    <p>Sounds like home</p>
+                </a>
+
+                <a class="room-card" href="youtube.html">
+                    <span>▷</span>
+                    <h3>YouTube</h3>
+                    <p>Videos and little favorites</p>
+                </a>
+
+            </div>
+        </section>
+
+        <div class="forest-divider">❦</div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>made with love, among the trees ♡</p>
+        <p>dear, darling · est. 2026</p>
+    </footer>
+
+</body>
+</html>
